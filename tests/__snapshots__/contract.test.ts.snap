@@ -1,0 +1,208 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`rendered output > builds the listicle markup exactly as recorded 1`] = `
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "author": {
+      "@type": "Organization",
+      "name": "Kindle Watchlist",
+    },
+    "dateModified": "2026-09-10",
+    "datePublished": "2026-09-01",
+    "description": "Six settings and habits that add days of reading to a single charge, ordered by how much each one saves.",
+    "headline": "6 ways to stretch a Kindle charge",
+    "image": "https://kindlewatchlist.com/images/stretch-a-kindle-charge.png",
+    "inLanguage": "en",
+    "keywords": "kindle battery tips",
+    "mainEntityOfPage": {
+      "@id": "https://kindlewatchlist.com/guides/en/stretch-a-kindle-charge",
+      "@type": "WebPage",
+    },
+    "publisher": {
+      "@type": "Organization",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://kindlewatchlist.com/icon.svg",
+      },
+      "name": "Kindle Watchlist",
+      "url": "https://kindlewatchlist.com",
+    },
+    "timeRequired": "PT1M",
+    "url": "https://kindlewatchlist.com/guides/en/stretch-a-kindle-charge",
+    "wordCount": 109,
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "inLanguage": "en",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, it is the same saving as disabling sync.",
+        },
+        "name": "Does airplane mode help?",
+      },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "inLanguage": "en",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "description": "The light is the single largest draw. Halving it buys back about a week.",
+        "name": "Dim the front light",
+        "position": 1,
+        "url": "https://kindlewatchlist.com/guides/en/stretch-a-kindle-charge#dim-the-front-light",
+      },
+      {
+        "@type": "ListItem",
+        "description": "Sync wakes the radio hourly. Turning it off saves three or four days a month.",
+        "name": "Turn off wireless sync",
+        "position": 2,
+        "url": "https://kindlewatchlist.com/guides/en/stretch-a-kindle-charge#turn-off-wireless-sync",
+      },
+      {
+        "@type": "ListItem",
+        "description": "A sideloaded book never touches the radio again.",
+        "name": "Sideload instead of streaming",
+        "position": 3,
+        "url": "https://kindlewatchlist.com/guides/en/stretch-a-kindle-charge#sideload-instead-of-streaming",
+      },
+      {
+        "@type": "ListItem",
+        "description": "Each redraw costs a full page refresh.",
+        "name": "Skip the animated screensaver",
+        "position": 4,
+        "url": "https://kindlewatchlist.com/guides/en/stretch-a-kindle-charge#skip-the-animated-screensaver",
+      },
+      {
+        "@type": "ListItem",
+        "description": "A partial charge ages the cell more slowly.",
+        "name": "Charge to eighty percent",
+        "position": 5,
+        "url": "https://kindlewatchlist.com/guides/en/stretch-a-kindle-charge#charge-to-eighty-percent",
+      },
+      {
+        "@type": "ListItem",
+        "description": "Lithium cells report less capacity when cold.",
+        "name": "Keep it out of the cold",
+        "position": 6,
+        "url": "https://kindlewatchlist.com/guides/en/stretch-a-kindle-charge#keep-it-out-of-the-cold",
+      },
+    ],
+    "itemListOrder": "https://schema.org/ItemListOrderAscending",
+    "name": "6 ways to stretch a Kindle charge",
+    "numberOfItems": 6,
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "item": "https://kindlewatchlist.com/guides/en",
+        "name": "Guides",
+        "position": 1,
+      },
+      {
+        "@type": "ListItem",
+        "item": "https://kindlewatchlist.com/guides/en/stretch-a-kindle-charge",
+        "name": "6 ways to stretch a Kindle charge",
+        "position": 2,
+      },
+    ],
+  },
+]
+`;
+
+exports[`rendered output > builds the prose markup exactly as recorded 1`] = `
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "author": {
+      "@type": "Organization",
+      "name": "Kindle Watchlist",
+    },
+    "dateModified": "2026-08-26",
+    "datePublished": "2026-08-26",
+    "description": "A Kindle battery holds a useful charge for about four years of daily reading before it needs replacing.",
+    "headline": "How long do Kindle batteries last?",
+    "inLanguage": "en",
+    "keywords": "kindle battery life, e-reader battery",
+    "mainEntityOfPage": {
+      "@id": "https://kindlewatchlist.com/guides/en/kindle-battery-life",
+      "@type": "WebPage",
+    },
+    "publisher": {
+      "@type": "Organization",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://kindlewatchlist.com/icon.svg",
+      },
+      "name": "Kindle Watchlist",
+      "url": "https://kindlewatchlist.com",
+    },
+    "timeRequired": "PT1M",
+    "url": "https://kindlewatchlist.com/guides/en/kindle-battery-life",
+    "wordCount": 29,
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "inLanguage": "en",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, by an authorised repairer.",
+        },
+        "name": "Can the battery be replaced?",
+      },
+    ],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "item": "https://kindlewatchlist.com/guides/en",
+        "name": "Guides",
+        "position": 1,
+      },
+      {
+        "@type": "ListItem",
+        "item": "https://kindlewatchlist.com/guides/en/kindle-battery-life",
+        "name": "How long do Kindle batteries last?",
+        "position": 2,
+      },
+    ],
+  },
+]
+`;
+
+exports[`rendered output > renders the listicle exactly as recorded 1`] = `
+"<p>Six changes, largest saving first.</p>
+<h2 id="dim-the-front-light">Dim the front light</h2>
+<p>The light is the single largest draw. Halving it buys back about a week.</p>
+<h3 id="a-note-on-warmth">A note on warmth</h3>
+<p>Warm light costs the same as cold light.</p>
+<h2 id="turn-off-wireless-sync">Turn off wireless sync</h2>
+<p>Sync wakes the radio hourly. Turning it off saves three or four days a month.</p>
+<h2 id="sideload-instead-of-streaming">Sideload instead of streaming</h2>
+<p>A sideloaded book never touches the radio again.</p>
+<h2 id="skip-the-animated-screensaver">Skip the animated screensaver</h2>
+<p>Each redraw costs a full page refresh.</p>
+<h2 id="charge-to-eighty-percent">Charge to eighty percent</h2>
+<p>A partial charge ages the cell more slowly.</p>
+<h2 id="keep-it-out-of-the-cold">Keep it out of the cold</h2>
+<p>Lithium cells report less capacity when cold.</p>"
+`;

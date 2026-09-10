@@ -1,0 +1,59 @@
+{
+  "name": "article-kit",
+  "version": "0.1.0",
+  "description": "One standardized article record, rendered into answer-engine-ready HTML, JSON-LD and page metadata.",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bernatmv/article-kit.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/core/index.d.ts",
+      "import": "./dist/core/index.js"
+    },
+    "./next": {
+      "types": "./dist/next/index.d.ts",
+      "import": "./dist/next/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "prepare": "pnpm build",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "smoke": "node --input-type=module -e \"import('./dist/core/index.js').then(m=>{if(typeof m.articleJsonLd!=='function')throw new Error('core export missing')});import('./dist/next/index.js').then(m=>{if(typeof m.toMetadata!=='function')throw new Error('next export missing')})\""
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "marked": "^16.4.1"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.0",
+    "@types/node": "^22.18.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "eslint": "^9.39.0",
+    "prettier": "^3.6.2",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.0",
+    "vitest": "^4.1.11"
+  },
+  "packageManager": "pnpm@9.15.0"
+}
