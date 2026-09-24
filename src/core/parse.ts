@@ -28,7 +28,7 @@ export function parseArticle(input: unknown): Article {
 
   const strings: Record<string, string> = {}
   for (const key of REQUIRED) {
-    const value = raw[key]
+    const value = key === 'publishedAt' ? dateString(raw[key]) : raw[key]
     if (typeof value !== 'string' || value.trim() === '') {
       throw new ArticleParseError(`An article needs a non-empty ${key}`)
     }
@@ -39,7 +39,8 @@ export function parseArticle(input: unknown): Article {
   if (!isIsoDate(strings.publishedAt as string)) {
     throw new ArticleParseError(`publishedAt must be an ISO date, got "${String(raw.publishedAt)}"`)
   }
-  if (raw.updatedAt !== undefined && !isIsoDate(String(raw.updatedAt))) {
+  const updated = raw.updatedAt === undefined ? undefined : dateString(raw.updatedAt)
+  if (updated !== undefined && !isIsoDate(String(updated))) {
     throw new ArticleParseError(`updatedAt must be an ISO date, got "${String(raw.updatedAt)}"`)
   }
 
@@ -68,8 +69,7 @@ export function parseArticle(input: unknown): Article {
     keywords: parseKeywords(raw.keywords),
     faq: parseFaq(raw.faq),
   }
-  const updatedAt = raw.updatedAt === undefined ? undefined : String(raw.updatedAt)
-  if (updatedAt) article.updatedAt = updatedAt
+  if (updated) article.updatedAt = String(updated)
   const hero = parseHero(raw.heroImage)
   if (hero) article.heroImage = hero
   if (Object.keys(extra).length > 0) article.extra = extra
@@ -134,6 +134,18 @@ function asRecord(value: unknown): Record<string, unknown> | null {
   return value && typeof value === 'object' && !Array.isArray(value)
     ? (value as Record<string, unknown>)
     : null
+}
+
+/**
+ * YAML reads an unquoted `2026-09-25` as a Date, and generators write dates unquoted, so
+ * front matter hands over a Date where JSON hands over a string. Midnight UTC is written
+ * back as the plain date it started as.
+ */
+function dateString(value: unknown): unknown {
+  if (!(value instanceof Date)) return value
+  if (Number.isNaN(value.getTime())) return ''
+  const iso = value.toISOString()
+  return iso.endsWith('T00:00:00.000Z') ? iso.slice(0, 10) : iso
 }
 
 function isIsoDate(value: string): boolean {

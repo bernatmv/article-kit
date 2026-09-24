@@ -1,6 +1,6 @@
 {
   "name": "article-kit",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "One standardized article record, rendered into answer-engine-ready HTML, JSON-LD and page metadata.",
   "license": "MIT",
   "type": "module",
@@ -23,7 +23,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "prepare": "pnpm build",
+    "prepare": "tsc -p tsconfig.build.json",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",

@@ -68,6 +68,59 @@ describe('markdown round trip', () => {
     expect(restored).toEqual(LISTICLE)
   })
 
+  it('reads dates a generator wrote unquoted, which YAML turns into Date objects', () => {
+    const article = parseMarkdown(
+      [
+        '---',
+        'title: A title',
+        'slug: a-slug',
+        'description: A description long enough to be a description.',
+        'locale: es',
+        'publishedAt: 2026-09-25',
+        'updatedAt: 2026-09-26T10:30:00Z',
+        '---',
+        '',
+        '## Body',
+      ].join('\n'),
+    )
+
+    expect(article.publishedAt).toBe('2026-09-25')
+    expect(article.updatedAt).toBe('2026-09-26T10:30:00.000Z')
+  })
+
+  it('reads the exact front matter the SEO optimizer writes', () => {
+    // Shape of seo-optimizer's markdown adapter output: unquoted safe scalars, JSON-quoted
+    // everything else, inline keyword arrays and a block list of question/answer pairs.
+    const article = parseMarkdown(
+      [
+        '---',
+        'title: "Qué es el BORME: guía para consultarlo"',
+        'slug: que-es-el-borme',
+        'description: "El BORME publica cada día hábil los actos inscritos en el Registro Mercantil."',
+        'locale: es',
+        'publishedAt: 2026-09-25',
+        'keywords: ["borme", "registro mercantil"]',
+        'format: listicle',
+        'heroImage: /images/que-es-el-borme.png',
+        'faq:',
+        '  - question: "¿Es gratuito?"',
+        '    answer: "Sí, la consulta en boe.es es gratuita."',
+        '---',
+        '',
+        '## Primero',
+      ].join('\n'),
+    )
+
+    expect(article).toMatchObject({
+      title: 'Qué es el BORME: guía para consultarlo',
+      publishedAt: '2026-09-25',
+      keywords: ['borme', 'registro mercantil'],
+      format: 'listicle',
+      heroImage: { src: '/images/que-es-el-borme.png' },
+      faq: [{ question: '¿Es gratuito?', answer: 'Sí, la consulta en boe.es es gratuita.' }],
+    })
+  })
+
   it('refuses a markdown file with no front matter', () => {
     expect(() => parseMarkdown('# Just a heading\n\nSome text.')).toThrow(/no front matter/)
   })
