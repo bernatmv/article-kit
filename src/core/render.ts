@@ -28,9 +28,10 @@ export function renderBody(article: Article, options: RenderOptions = {}): strin
 
   marked.use({
     renderer: {
-      heading({ tokens, depth }) {
+      heading({ tokens, depth, text: raw }) {
         const text = this.parser.parseInline(tokens)
-        const id = uniqueId(headingId(stripTags(text), options.idPrefix), used)
+        // The id comes from the same plain text sections() reads, so anchors always match.
+        const id = uniqueId(headingId(headingText(raw), options.idPrefix), used)
         return `<h${depth} id="${id}">${text}</h${depth}>\n`
       },
       html({ raw }) {
@@ -54,7 +55,7 @@ export function sections(article: Article, options: RenderOptions = {}): Section
     if (fenced) return
     const match = /^(#{2,4})\s+(.*)$/.exec(line)
     if (!match) return
-    const name = stripInlineMarkdown(match[2] as string).trim()
+    const name = headingText(match[2] as string)
     if (!name) return
     found.push({
       name,
@@ -67,12 +68,23 @@ export function sections(article: Article, options: RenderOptions = {}): Section
   return found
 }
 
+const NUMBERED_ITEM = /^(\d{1,2})[.)]\s+(\S.*)$/
+
 /**
- * The items a listicle promises. Only H2s count: a listicle's items are its top-level
- * sections, and folding H3s in would put sub-points in the `ItemList` as peers.
+ * The items a listicle promises. Only H2s count: folding H3s in would put sub-points in
+ * the `ItemList` as peers. When some H2s are numbered ("3. Sideload instead of
+ * streaming") only those are items, and the rest — context, a comparison table, how to
+ * choose — are sections around the list. The number is left to `position`, so the item
+ * is named by its name; its id still matches the rendered heading.
  */
 export function listicleItems(article: Article, options: RenderOptions = {}): Section[] {
-  return sections(article, options).filter((section) => section.level === 2)
+  const h2s = sections(article, options).filter((section) => section.level === 2)
+  const numbered = h2s.filter((section) => NUMBERED_ITEM.test(section.name))
+  if (numbered.length === 0) return h2s
+  return numbered.map((section) => ({
+    ...section,
+    name: (NUMBERED_ITEM.exec(section.name)?.[2] ?? section.name).trim(),
+  }))
 }
 
 /** Whole-article reading time, at 220 words a minute, never less than one. */
@@ -173,6 +185,21 @@ function uniqueId(id: string, used: Set<string>): string {
   return candidate
 }
 
+/**
+ * A heading's plain text. Unlike body text, a leading "3." is part of the heading, not a
+ * list marker: stripping it gave numbered headings an id their rendered anchor did not
+ * have, and lost the number a listicle's items are recognized by.
+ */
+function headingText(value: string): string {
+  return value
+    .replace(/`+([^`]*)`+/g, '$1')
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/[*_~]+/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
 function stripInlineMarkdown(value: string): string {
   return value
     .replace(/`{1,3}[^`]*`{1,3}/g, ' ')
@@ -183,10 +210,6 @@ function stripInlineMarkdown(value: string): string {
     .replace(/^\s*\d+\.\s+/gm, '')
     .replace(/^\s*>\s?/gm, '')
     .replace(/\s+/g, ' ')
-}
-
-function stripTags(value: string): string {
-  return value.replace(/<[^>]*>/g, '')
 }
 
 export function escapeHtml(value: string): string {
