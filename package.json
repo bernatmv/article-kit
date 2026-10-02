@@ -1,6 +1,6 @@
 {
   "name": "article-kit",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "One standardized article record, rendered into answer-engine-ready HTML, JSON-LD and page metadata.",
   "license": "MIT",
   "type": "module",

@@ -60,6 +60,46 @@ describe('sections', () => {
     ])
   })
 
+  it('counts only numbered headings as items when the list is numbered', () => {
+    const numbered = {
+      ...LISTICLE,
+      body: [
+        '## Why charges run out',
+        '',
+        'Context before the list.',
+        '',
+        '## 1. Dim the front light',
+        '',
+        'The light is the largest draw.',
+        '',
+        '## 2. Turn off wireless sync',
+        '',
+        'Sync wakes the radio.',
+        '',
+        '## How to choose',
+        '',
+        'Start with the light.',
+      ].join('\n'),
+    }
+    const items = listicleItems(numbered)
+
+    expect(items.map((item) => item.name)).toEqual([
+      'Dim the front light',
+      'Turn off wireless sync',
+    ])
+    // The anchor still matches the heading as rendered, number included.
+    expect(items[0]?.id).toBe('1-dim-the-front-light')
+    expect(renderBody(numbered)).toContain('id="1-dim-the-front-light"')
+  })
+
+  it('gives headings with code or links the same id in the page and in sections', () => {
+    const article = { ...PROSE, body: '## Use `sync` with the [Kindle app](/x)\n\nText.' }
+    const [section] = sections(article)
+
+    expect(section?.id).toBe('use-sync-with-the-kindle-app')
+    expect(renderBody(article)).toContain(`id="${section?.id}"`)
+  })
+
   it('keeps sub-headings out of the item list', () => {
     expect(sections(LISTICLE).some((section) => section.level === 3)).toBe(true)
     expect(listicleItems(LISTICLE).some((item) => item.level !== 2)).toBe(false)
