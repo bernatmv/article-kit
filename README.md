@@ -9,13 +9,19 @@ everywhere. This package is where that markup lives instead.
 
 ## Install
 
-There is no npm release yet, so install by exact tag:
+Install the prebuilt package attached to a release, pinned to an exact version:
 
 ```bash
-pnpm add github:bernatmv/article-kit#v0.1.0
+pnpm add https://github.com/bernatmv/article-kit/releases/download/v0.1.2/article-kit-0.1.2.tgz
 ```
 
-Pin the tag rather than a range. Every site upgrades deliberately.
+Nothing is built on install, so no `allowBuilds` entry is needed. Avoid installing
+from the git tag: pnpm then builds the package in a temporary folder, and on Vercel,
+where the store lives inside the project, that nested install finds the consuming
+project's workspace and installs it again until the build fails.
+
+Every `v*` tag publishes its tarball through the release workflow, after the gate
+passes and the tag matches `package.json`.
 
 ## The record
 
